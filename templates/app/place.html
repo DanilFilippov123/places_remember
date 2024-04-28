@@ -1,0 +1,20 @@
+
+{% extends "app/index.html" %}
+
+{% load static %}
+
+{% block head %}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_maps_api_key }}&lang=ru_RU" type="text/javascript">
+    </script>
+    <script src="{% static 'app/script/script.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <div id="map" style="width: 600px; height: 400px"></div>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
