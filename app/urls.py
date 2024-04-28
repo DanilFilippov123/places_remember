@@ -5,4 +5,5 @@ from app import views
 urlpatterns = [
     path('index', views.hello_page, name='hello_page'),
     path("place", views.PlaceCreateView.as_view(), name='place_page'),
+    path("place/<int:pk>/update", views.PlaceUpdateView.as_view(), name='place_update_page'),
 ]

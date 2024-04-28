@@ -24,8 +24,13 @@ function init() {
     myMap.controls.remove('zoomControl'); // удаляем контрол зуммирования
     myMap.controls.remove('rulerControl'); // удаляем контрол линейного управления
 
-
-    let dep = new ymaps.Placemark(ekb_center, {},
+    let prev_marker_pos = [parseFloat(document.getElementById('id_lat').value),
+        parseFloat(document.getElementById('id_lng').value)];
+    if (isNaN(prev_marker_pos[0]) || isNaN(prev_marker_pos[1])) {
+        prev_marker_pos = ekb_center
+    }
+    console.log(prev_marker_pos)
+    let dep = new ymaps.Placemark(prev_marker_pos, {},
         {
             draggable: true
         });
