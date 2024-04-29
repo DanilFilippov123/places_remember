@@ -1,11 +1,11 @@
 // Функция ymaps.ready() будет вызвана, когда
 // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
-ymaps.ready(init);
+ymaps.ready(show_one_map);
 
-function init() {
+function show_one_map() {
     let ekb_center = [56.845520, 60.609821]
     // Создание карты.
-    var myMap = new ymaps.Map("map", {
+    const myMap = new ymaps.Map("map", {
         // Координаты центра карты.
         // Порядок по умолчанию: «широта, долгота».
         // Чтобы не определять координаты центра карты вручную,
