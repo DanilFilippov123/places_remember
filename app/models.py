@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 
@@ -15,3 +16,8 @@ class Place(models.Model):
 
     def get_absolute_url(self):
         return reverse('place_update_page', kwargs={'pk': self.pk})
+
+
+class UserProfile(models.Model):
+    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
+    user = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, related_name='profile')
