@@ -1,0 +1,54 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block head %}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_maps_api_key }}&lang=ru_RU" type="text/javascript">
+    </script>
+    <script src="{% static 'app/script/all_maps_view.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <header>
+        {% if user.profile.photo %}
+            <img src="{{ user.profile.photo.url }}" alt="Фото пользователя">
+        {% endif %} 
+    </header>
+    <form action="{% url 'logout_page' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+
+    </form>
+    {% for place in places %}
+        <p>
+            Name: {{ place.name }}
+        </p>
+
+        <p>
+            Comment: {{ place.comment }}
+        </p>
+        <div class="map" data-lat="{{ place.lat }}" data-lng="{{ place.lng }}">
+
+        </div>
+    {% empty %}
+        <p>
+            Empty yet :(
+        </p>
+    {% endfor %}
+
+    <ul>
+        {% if paginator.count > 2 %}
+
+
+            {% for p in paginator.page_range %}
+                {% if page_obj.number == p %}
+                    <li class="page-num page-num-selected">{{ p }}</li>
+                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                    <li class="page-num">
+                        <a href="?page={{ p }}">{{ p }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+{% endblock %}
