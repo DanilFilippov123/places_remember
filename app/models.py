@@ -11,6 +11,8 @@ class Place(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()
 
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='places')
+
     def __str__(self):
         return self.name
 
