@@ -3,15 +3,14 @@ from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, TemplateView
 
 from app.forms import PlaceForm, RegisterUserForm
 from app.models import Place, UserProfile
 
 
-# Create your views here.
-def hello_page(request):
-    return render(request, 'app/base.html')
+class StartPageTemplateView(TemplateView):
+    template_name = 'app/index.html'
 
 
 class PlaceCreateView(LoginRequiredMixin, CreateView):
