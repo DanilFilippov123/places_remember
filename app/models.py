@@ -11,7 +11,12 @@ class Place(models.Model):
     lat = models.FloatField()
     lng = models.FloatField()
 
+    last_modified = models.DateTimeField(auto_now=True)
+
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='places')
+
+    class Meta:
+        ordering = ['-last_modified']
 
     def __str__(self):
         return self.name

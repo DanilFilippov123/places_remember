@@ -11,10 +11,27 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <div id="map" class="map"></div>
-        <input type="submit" value="Submit">
-    </form>
+
+    <div class=" container">
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <h2 class="text-center">Создайте воспоминание</h2>
+            {% for field in form.visible_fields %}
+                <div class="mb-3 ">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <small>{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field }}
+            {% endfor %}
+
+            <div id="map" class="map"></div>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+    </div>
 {% endblock %}

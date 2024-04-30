@@ -7,7 +7,8 @@ from app.models import Place
 
 class PlaceForm(forms.ModelForm):
     name = forms.CharField(label='Название места')
-    comment = forms.CharField(label='Комментарий')
+    comment = forms.CharField(label='Комментарий',
+                              widget=forms.Textarea(attrs={'rows': 3, 'class': 'form-control'}))
     lat = forms.FloatField(widget=forms.HiddenInput())
     lng = forms.FloatField(widget=forms.HiddenInput())
 
