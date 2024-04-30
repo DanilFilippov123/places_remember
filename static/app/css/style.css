@@ -1,12 +1,10 @@
 
-html {
-  background-color: #eee;
-}
-
 .map {
     width: 600px;
     height: 400px;
     clear:both;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 .navbar-brand {
@@ -15,4 +13,13 @@ html {
 
 .navbar-buttons {
     margin-bottom: 0;
+}
+
+.create-new-place-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.blog-text {
+    margin-top: 5%;
 }
