@@ -1,26 +1,28 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-    <a href="/login/vk-oauth2"><img src="/static/lvk.png" class="avatar-3" data-toggle="tooltip"
-                                    title="Login Vk"></a>
 
-    <div class="center">
-        <form method="post" class="card" novalidate>
+    <div class=" container">
+        <form method="post">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{ next }}"/>
-            <h2 class="text-center">Log in to your account</h2>
+            <h2 class="text-center">Войдите в свой аккаунт</h2>
             {% for field in form %}
-                {{ field.label_tag }}
-                {{ field }}
-                {% if field.errors %}
-                    <small>{{ field.errors|striptags }}</small>
-                {% endif %}
+                <div class="mb-3 ">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <small>{{ field.errors|striptags }}</small>
+                    {% endif %}
+                </div>
             {% endfor %}
 
-            <input type="submit" value="Login" class="btn btn-primary full-width">
+            <button type="submit" class="btn btn-primary">Войти</button>
             <hr>
-            <p class="text-center">Don't have a account? <a href="{% url "registration_page" %}">Join Now</a></p>
+            <p class="text-center">Нет аккаунта?<a href="{% url "registration_page" %}"> Зарегистрироваться</a></p>
         </form>
     </div>
+
+
 
 {% endblock content %}
