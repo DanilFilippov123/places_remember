@@ -58,7 +58,12 @@ class AllPlacesView(LoginRequiredMixin, ListView):
         return user.places.all()
 
 
-class PlaceLoginView(LoginView):
+class PlaceDeleteView(LoginRequiredMixin, DeleteView):
+    model = Place
+    success_url = reverse_lazy('my_places_page')
+
+
+class PlaceRememberLoginView(LoginView):
     redirect_authenticated_user = True
     template_name = 'app/login.html'
 
