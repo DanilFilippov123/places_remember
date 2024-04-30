@@ -40,9 +40,7 @@ class AllPlacesView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user is not None and not user.is_anonymous:
-            return user.places.all()
-        return Place.objects.none()
+        return user.places.all()
 
 
 class PlaceLoginView(LoginView):
