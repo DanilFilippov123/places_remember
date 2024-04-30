@@ -3,19 +3,28 @@
 <nav class="navbar ">
     <div class="container">
         <div class="navbar-header ">
-            <span class="navbar-brand">Place Remember</span>
+            <a class="btn" href="{% url 'hello_page' %}"><span class="navbar-brand">Place Remember</span></a>
         </div>
         {% if not user.is_authenticated %}
             <p class="navbar-right actions navbar-buttons">
-                <a class="btn btn-default action-button" href="{% url 'login_page' %}">Log In</a>
-                <a class="btn btn-default action-button" href="{% url 'registration_page' %}">Sign Up</a>
+                <a class="btn btn-default action-button" href="{% url 'login_page' %}">Войти</a>
+                <a class="btn btn-default action-button" href="{% url 'social:begin' 'vk-oauth2' %}">
+                    <img height="38" width="38" alt="Auth Vk" src="{% static 'app/image/vk.png' %}">
+                </a>
+                <a class="btn btn-default action-button" href="{% url 'registration_page' %}">Регистрация</a>
             </p>
         {% else %}
             <div class="nav-user-info">
                 <a class="btn btn-default action-button" href="{% url 'my_places_page' %}">{{ user.username }}</a>
                 {% if user.profile.photo %}
-                    <img class="nav-user-photo" src="{{ user.profile.photo.url }}" height="54" width="54" alt="User photo">
+                    <img class="nav-user-photo" src="{{ user.profile.photo.url }}" height="54" width="54"
+                         alt="User photo">
                 {% endif %}
+                <form class="btn" action="{% url 'logout_page' %}" method="post">
+                    {% csrf_token %}
+                    <input class="btn btn-default action-button" type="submit" value="Выйти">
+
+                </form>
             </div>
         {% endif %}
     </div>
