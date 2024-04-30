@@ -8,43 +8,66 @@
 {% endblock %}
 
 {% block content %}
+    <div class="container">
 
-    <form action="{% url 'logout_page' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Logout">
+        {% for place in places %}
+            <div class="card" style="width: 70%;">
+                <div class="map card-img-top" data-lat="{{ place.lat }}" data-lng="{{ place.lng }}"></div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ place.name }}</h5>
+                    <p class="card-text">{{ place.comment }}</p>
+                    <p class="text-secondary">{{ place.last_modified }}</p>
+                    <a href="{{ place.get_absolute_url }}" class="btn btn-primary">Редактировать</a>
+                    <p>
+                    <form action="{% url 'place_delete_page' place.pk %}" method="post">
+                        {% csrf_token %}
+                        <input class="btn btn-danger" type="submit" value="Удалить"/>
+                    </form>
+                    </p>
+                </div>
+            </div>
 
-    </form>
-    {% for place in places %}
-        <p>
-            Name: {{ place.name }}
-        </p>
+        {% empty %}
+            <div class="container">
+                <p>У вас нет ни одного воспоминания</p>
+            </div>
+        {% endfor %}
 
-        <p>
-            Comment: {{ place.comment }}
-        </p>
-        <div class="map" data-lat="{{ place.lat }}" data-lng="{{ place.lng }}">
+        <div class="create-new-place-btn row-cols-3">
+            <a href="{% url 'place_page' %}" class="btn btn-primary">Создать новое воспоминание.</a>
 
         </div>
-    {% empty %}
-        <p>
-            Empty yet :(
-        </p>
-    {% endfor %}
 
-    <ul>
         {% if paginator.count > 2 %}
-
-
-            {% for p in paginator.page_range %}
-                {% if page_obj.number == p %}
-                    <li class="page-num page-num-selected">{{ p }}</li>
-                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
-                    <li class="page-num">
-                        <a href="?page={{ p }}">{{ p }}</a>
+            <nav>
+            <ul class="pagination pagination-lg justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
                     </li>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
-    </ul>
+                {% for p in paginator.page_range %}
 
+                    {% if page_obj.number == p %}
+                        <li class="page-item active"><a class="page-link">{{ p }}</a></li>
+                    {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+
+        </nav>
+    </div>
 {% endblock %}
