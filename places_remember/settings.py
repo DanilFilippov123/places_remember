@@ -82,11 +82,15 @@ WSGI_APPLICATION = 'places_remember.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',  # Используется PostgreSQL
-        'NAME': 'postgres',  # Имя базы данных
-        'USER': 'postgres',  # Имя пользователя
-        'PASSWORD': '123',  # Пароль пользователя
-        'HOST': 'localhost',  # Наименование контейнера для базы данных в Docker Compose
-        'PORT': '5432',  # Порт базы данных
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+    if not DEBUG else {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -152,7 +156,7 @@ YANDEX_MAPS_API_KEY = os.getenv("YANDEX_MAPS_API_KEY")
 SOCIAL_AUTH_VK_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_VK_OAUTH2_KEY")
 SOCIAL_AUTH_VK_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_VK_OAUTH2_SECRET")
 
-SOCIAL_AUTH_VK_OAUTH2_EXTRA_DATA = ['email']
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
 SOCIAL_AUTH_PIPELINE = (
 
     'social_core.pipeline.social_auth.social_details',
@@ -164,9 +168,11 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
-    'app.pipeline.get_avatar',  # Указываем путь, где лежит функция получения аватара.
+    'app.pipeline.get_avatar',
 )
 
 LOGOUT_REDIRECT_URL = 'hello_page'
 LOGIN_REDIRECT_URL = 'my_places_page'
 LOGIN_URL = 'login_page'
+
+
