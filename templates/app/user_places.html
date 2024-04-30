@@ -8,11 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <header>
-        {% if user.profile.photo %}
-            <img src="{{ user.profile.photo.url }}" alt="Фото пользователя">
-        {% endif %} 
-    </header>
+
     <form action="{% url 'logout_page' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="Logout">

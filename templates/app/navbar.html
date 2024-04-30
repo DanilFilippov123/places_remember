@@ -1,0 +1,22 @@
+{% load static %}
+
+<nav class="navbar ">
+    <div class="container">
+        <div class="navbar-header ">
+            <span class="navbar-brand">Place Remember</span>
+        </div>
+        {% if not user.is_authenticated %}
+            <p class="navbar-right actions navbar-buttons">
+                <a class="btn btn-default action-button" href="{% url 'login_page' %}">Log In</a>
+                <a class="btn btn-default action-button" href="{% url 'registration_page' %}">Sign Up</a>
+            </p>
+        {% else %}
+            <div class="nav-user-info">
+                <a class="btn btn-default action-button" href="{% url 'my_places_page' %}">{{ user.username }}</a>
+                {% if user.profile.photo %}
+                    <img class="nav-user-photo" src="{{ user.profile.photo.url }}" height="54" width="54" alt="User photo">
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</nav>

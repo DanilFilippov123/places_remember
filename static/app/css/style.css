@@ -1,5 +1,18 @@
+
+html {
+  background-color: #eee;
+}
+
 .map {
     width: 600px;
     height: 400px;
     clear:both;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.navbar-buttons {
+    margin-bottom: 0;
 }
