@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, ListView, TemplateView
 
@@ -11,6 +11,12 @@ from app.models import Place, UserProfile
 
 class StartPageTemplateView(TemplateView):
     template_name = 'app/index.html'
+    
+    def get(self, request, *args, **kwargs):
+        # if user is already authenticated - redirect him to his places
+        if request.user.is_authenticated:
+            return redirect('my_places_page')
+        return super().get(request, *args, **kwargs)
 
 
 class PlaceCreateView(LoginRequiredMixin, CreateView):
