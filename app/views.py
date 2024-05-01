@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
@@ -34,7 +34,7 @@ class PlaceCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PlaceUpdateView(LoginRequiredMixin, UpdateView):
+class PlaceUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Place
     form_class = PlaceForm
 
@@ -42,6 +42,9 @@ class PlaceUpdateView(LoginRequiredMixin, UpdateView):
 
     template_name = 'app/place.html'
     success_url = reverse_lazy('hello_page')
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
 
 class AllPlacesView(LoginRequiredMixin, ListView):
@@ -58,9 +61,12 @@ class AllPlacesView(LoginRequiredMixin, ListView):
         return user.places.all()
 
 
-class PlaceDeleteView(LoginRequiredMixin, DeleteView):
+class PlaceDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Place
     success_url = reverse_lazy('my_places_page')
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
 
 class PlaceRememberLoginView(LoginView):
