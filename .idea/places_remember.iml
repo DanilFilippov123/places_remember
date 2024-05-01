@@ -18,14 +18,15 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv_for_root" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/media/users/2024/04/30" />
+      <excludeFolder url="file://$MODULE_DIR$/app/migrations" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="bootstrap" level="application" />
   </component>
   <component name="PackageRequirementsSettings">
-    <option name="removeUnused" value="true" />
-    <option name="modifyBaseFiles" value="true" />
+    <option name="requirementsPath" value="$MODULE_DIR$/requirements.txt" />
+    <option name="keepMatchingSpecifier" value="false" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
